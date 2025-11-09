@@ -1,33 +1,16 @@
 #include "utils.h"
 
-#include <stdexcept>
-#include <string>
+#include <iostream>
 #include <vector>
 
-std::string print_vector(const Vector& vec) {
+void print_vector(const std::vector<double>& vec) {
     size_t length = vec.size();
 
-    std::string output = "[";
+    std::cout << "[";
 
     for(size_t i = 0; i < length; ++i) {
-        output += " vec[i]";
+        std::cout << " " << vec[i];
     }
 
-    output += " ]";
-    return output;
-}
-
-std::string print_matrix(const Matrix& mat) {
-    size_t m = mat.size();
-    if(m == 0) {
-        return "[ ]";
-    }
-
-    std::string output = "";
-
-    for(size_t i = 0; i < m; ++i) {
-        output += print_vector(mat[i]) + "\n";
-    }
-
-    return output;
+    std::cout << " ]";
 }
