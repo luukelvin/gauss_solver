@@ -14,3 +14,11 @@ void print_vector(const std::vector<double>& vec) {
 
     std::cout << " ]";
 }
+
+std::vector<double>& swap(std::vector<double>& vec, size_t i, size_t j) {
+    double temp = vec[i];
+    vec[i] = vec[j];
+    vec[j] = temp;
+
+    return vec;
+}

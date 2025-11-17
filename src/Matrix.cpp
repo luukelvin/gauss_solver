@@ -1,5 +1,5 @@
 #include "utils.h"
-#include "LinearSystem.h"
+#include "Matrix.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -40,11 +40,25 @@ Matrix::Matrix(const std::vector<std::vector<double>>& arr) {
     data = std::valarray<double> (flattened.data(), num_rows*num_cols);
 }
 
+std::pair<size_t, size_t> Matrix::shape() const {
+    return {num_rows, num_cols};
+}
+
+double& Matrix::operator()(size_t i, size_t j) {
+    return data[i*num_cols + j];
+}
+
 double Matrix::operator()(size_t i, size_t j) const {
     return data[i*num_cols + j];
 }
 
 Matrix& Matrix::permute_rows(size_t i, size_t j) {
+    /**
+     * Permutes rows i and j in-place.
+     *
+     * Returns a reference to this.
+     */
+
     // references to the ith and jth row.
     std::slice_array<double> row_i = data[std::slice(i*num_cols, num_cols, 1)];
     std::slice_array<double> row_j = data[std::slice(j*num_cols, num_cols, 1)];
