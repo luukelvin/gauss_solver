@@ -6,6 +6,7 @@
 
 #include "utils.h"
 #include "Matrix.h"
+#include "SparseMatrix.h"
 #include "Solver.h"
 
 #include <iostream>
@@ -207,6 +208,15 @@ void test_4_singular_matrix() {
     }
 }
 
+void test_5_sparse() {
+    Matrix A = { {{2,-1,0,0},{-1,2,-1,0},{0,-1,2,-1},{0,0,-1,2}} };
+
+    SparseMatrix S = {A};
+    S.print();
+    S.permute_rows(0,2);
+    S.print();
+}
+
 int main() {
 
     // matrix_constructors();
@@ -221,6 +231,8 @@ int main() {
     test_3_pivot_permutation();
     std::cout << '\n';
     test_4_singular_matrix();
+    std::cout << '\n';
+    test_5_sparse();
     std::cout << '\n';
 
     return 0;
