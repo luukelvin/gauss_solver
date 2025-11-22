@@ -80,22 +80,24 @@ SparseMatrix& SparseMatrix::permute_rows(size_t i, size_t j) {
 
     // Update col_index and data
     for (size_t k = row_i_start; k < row_j_end; k++) {
+        // Compute the right index to take from the copies for each k
+        size_t offset = 0;
         if (k < row_i_end + delta) {
             // Copy row j
-            col_index[k] = col_copy[(row_j_start-row_i_start) + (k-row_i_start)];
-            data[k] = data_copy[(row_j_start-row_i_start) + (k-row_i_start)];
+            offset = (row_j_start-row_i_start) + (k-row_i_start);
         }
         else if (k < row_j_start + delta) {
             // Copy rows between i+1 and j-1
-            col_index[k] = col_copy[k - row_i_start - delta];
-            data[k] = data_copy[k - row_i_start - delta];
+            offset = k - row_i_start - delta;
         }
         else {
             // k >= row_j_start + delta
             // Copy row i
-            col_index[k] = col_copy[k - row_j_start - delta];
-            data[k] = data_copy[k - row_j_start - delta];
+            offset = k - row_j_start - delta;
         }
+
+        col_index[k] = col_copy[offset];
+        data[k] = data_copy[offset];
     }
 
     // Update row_index only for rows in between i and j+1.
